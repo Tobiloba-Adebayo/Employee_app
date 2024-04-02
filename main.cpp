@@ -19,6 +19,8 @@ struct Employee {
 void addEmployee(Employee employees[], int &numEmployees);
 void viewEmployees(const Employee employees[], int numEmployees);
 void calculateTotalPay(Employee employees[], int numEmployees);
+void deleteEmployee(Employee employees[], int &numEmployees);
+void editEmployee(Employee employees[], int numEmployees);
 
 int main() {
     Employee employees[MAX_EMPLOYEES];
@@ -30,7 +32,9 @@ int main() {
         cout << "1. Add Employee" << endl;
         cout << "2. View Employees" << endl;
         cout << "3. Calculate Total Pay" << endl;
-        cout << "4. Exit" << endl;
+        cout << "4. Delete Employee" << endl;
+        cout << "5. Edit Employee" << endl;
+        cout << "6. Exit" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -45,12 +49,18 @@ int main() {
                 calculateTotalPay(employees, numEmployees);
                 break;
             case '4':
+                deleteEmployee(employees, numEmployees);
+                break;
+            case '5':
+                editEmployee(employees, numEmployees);
+                break;
+            case '6':
                 cout << "Exiting program..." << endl;
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
         }
-    } while (choice != '4');
+    } while (choice != '6');
 
     return 0;
 }
@@ -94,3 +104,60 @@ void calculateTotalPay(Employee employees[], int numEmployees) {
         }
     }
 }
+
+// Function to delete an employee
+void deleteEmployee(Employee employees[], int &numEmployees) {
+    if (numEmployees == 0) {
+        cout << "No employees to delete." << endl;
+        return;
+    }
+
+    int employeeId;
+    cout << "Enter employee ID to delete: ";
+    cin >> employeeId;
+
+    int indexToDelete = -1;
+    for (int i = 0; i < numEmployees; ++i) {
+        if (employees[i].id == employeeId) {
+            indexToDelete = i;
+            break;
+        }
+    }
+
+    if (indexToDelete != -1) {
+        // Shift elements to the left to overwrite the deleted employee
+        for (int i = indexToDelete; i < numEmployees - 1; ++i) {
+            employees[i] = employees[i + 1];
+        }
+        numEmployees--;
+        cout << "Employee deleted successfully." << endl;
+    } else {
+        cout << "Employee with ID " << employeeId << " not found." << endl;
+    }
+}
+
+// Function to edit employee data
+void editEmployee(Employee employees[], int numEmployees) {
+    if (numEmployees == 0) {
+        cout << "No employees to edit." << endl;
+        return;
+    }
+
+    int employeeId;
+    cout << "Enter employee ID to edit: ";
+    cin >> employeeId;
+
+    for (int i = 0; i < numEmployees; ++i) {
+        if (employees[i].id == employeeId) {
+            cout << "Enter new name for employee " << employees[i].id << ": ";
+            cin >> employees[i].name;
+            cout << "Enter new salary for employee " << employees[i].id << ": ";
+            cin >> employees[i].salary;
+            cout << "Employee data updated successfully." << endl;
+            return;
+        }
+    }
+
+    cout << "Employee with ID " << employeeId << " not found." << endl;
+}
+

@@ -1,6 +1,6 @@
 # Employee_app
 It is an application created with c++ that helps to store employees' data and also calculate their pay.
-Of course, let's explain the code without demonstrating it:
+Now this is how it works
 
 1. **Constants**: 
    - `MAX_EMPLOYEES`: Defines the maximum number of employees the system can handle.
